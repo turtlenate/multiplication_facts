@@ -36,6 +36,15 @@ const ansSubmit = () => {
         correctCount++;
         attemptsCount++;
         console.log("Correct " + correctCount);
+         if (correctCount>=12) {
+                            document.querySelector("#feedback").innerHTML="You have finished. You got " + correctCount + " out of " + attemptsCount + " correct.";
+                            document.querySelector("#feedback").style.color="blue";
+                            document.querySelector("#ans").value="";
+                            document.querySelector("#ans").disabled=true;
+                            document.querySelector("#question").innerHTML="Quiz Over!";
+                            document.querySelector("#submitButton").innerHTML="Restart";
+                            return;
+         } else {
         praisePick=Math.floor(Math.random()*praiseArray.length);
         praise=praiseArray[praisePick];
         document.querySelector("#feedback").innerHTML=praise;
@@ -44,11 +53,7 @@ const ansSubmit = () => {
         setTimeout(enableInput, timeOut);
         setTimeout(clearFeedback, timeOut);
         setTimeout(clearAns, timeOut);
-            if (correctCount<12) {
-            setTimeout(generateQuestion, timeOut);
-            } else {
-                document.querySelector("#feedback").innerHTML="You have finished. You got " + correctCount + " out of " + attemptsCount + " correct."
-                return;
+        setTimeout(generateQuestion, timeOut);    
             }
     } else {
         attemptsCount++;
