@@ -4,7 +4,10 @@ let ans;
 let ansNum;
 let praise;
 let praisePick;
-let count=0;
+let tryAgain
+let tryAgainPick
+let correctCount=0;
+let attemptsCount=0;
 const praiseArray=['Well Done', 'Great Work', 'Amazing', 'Brilliant'];
 const tryAgainArray=['Try Again', 'Have Another Go'];
 const timeOut=1000;
@@ -30,7 +33,9 @@ const ansSubmit = () => {
     ans=document.querySelector("#ans").value;
     ansNum = Number(ans);
     if (ansNum===2*randomNumber) {
-        count++;
+        correctCount++;
+        attemptsCount++;
+        console.log("Correct " + correctCount);
         praisePick=Math.floor(Math.random()*praiseArray.length);
         praise=praiseArray[praisePick];
         document.querySelector("#feedback").innerHTML=praise;
@@ -39,9 +44,18 @@ const ansSubmit = () => {
         setTimeout(enableInput, timeOut);
         setTimeout(clearFeedback, timeOut);
         setTimeout(clearAns, timeOut);
-        setTimeout(generateQuestion, timeOut);
+            if (correctCount<12) {
+            setTimeout(generateQuestion, timeOut);
+            } else {
+                document.querySelector("#feedback").innerHTML="You have finished. You got " + correctCount + " out of " + attemptsCount + " correct."
+                return;
+            }
     } else {
-        document.querySelector("#feedback").innerHTML="Have Another Go";
+        attemptsCount++;
+        console.log("Attempts " + attemptsCount);
+        tryAgainPick=Math.floor(Math.random()*tryAgainArray.length);
+        tryAgain=tryAgainArray[tryAgainPick];
+        document.querySelector("#feedback").innerHTML=tryAgain;
         document.querySelector("#feedback").style.color="blue";
         document.querySelector("#ans").disabled = true;
         setTimeout(enableInput, timeOut);
