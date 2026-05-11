@@ -15,7 +15,7 @@ const timeOut=1000;
 //Event listener so users can press the Enter key to submit an answer.
 document.querySelector("#ans").addEventListener("keydown", function (e) {
     if (e.key === 'Enter')  {
-        ansSubmit();
+        buttonPressed();
     }
 });
 
@@ -26,46 +26,54 @@ const generateQuestion = () => {
     return randomNumber;
 };
 
-/*A function to run when the answer is submitted. It checks the answer is correct, gives appropriate
-and either clears the answer field if the answer was correct or asks the same question again if 
-incorrect.*/
-const ansSubmit = () => {
-    ans=document.querySelector("#ans").value;
-    ansNum = Number(ans);
-    if (ansNum===2*randomNumber) {
-        correctCount++;
-        attemptsCount++;
-        console.log("Correct " + correctCount);
-         if (correctCount>=12) {
-                            document.querySelector("#feedback").innerHTML="You have finished. You got " + correctCount + " out of " + attemptsCount + " correct.";
-                            document.querySelector("#feedback").style.color="blue";
-                            document.querySelector("#ans").value="";
-                            document.querySelector("#ans").disabled=true;
-                            document.querySelector("#question").innerHTML="Quiz Over!";
-                            document.querySelector("#submitButton").innerHTML="Restart";
-                            return;
-         } else {
-        praisePick=Math.floor(Math.random()*praiseArray.length);
-        praise=praiseArray[praisePick];
-        document.querySelector("#feedback").innerHTML=praise;
-        document.querySelector("#feedback").style.color="blue";
-        document.querySelector("#ans").disabled= true;
-        setTimeout(enableInput, timeOut);
-        setTimeout(clearFeedback, timeOut);
-        setTimeout(clearAns, timeOut);
-        setTimeout(generateQuestion, timeOut);    
-            }
+
+const submitAns = () => {
+        ans=document.querySelector("#ans").value;
+        ansNum = Number(ans);
+        if (ansNum===2*randomNumber) {
+            correctCount++;
+            attemptsCount++;
+            console.log("Correct " + correctCount);
+            if (correctCount>=12) {
+                                document.querySelector("#feedback").innerHTML="You have finished. You got " + correctCount + " out of " + attemptsCount + " correct.";
+                                document.querySelector("#feedback").style.color="blue";
+                                document.querySelector("#ans").value="";
+                                document.querySelector("#ans").disabled=true;
+                                document.querySelector("#question").innerHTML="Quiz Over!";
+                                document.querySelector("#submitButton").innerHTML="Restart";
+                                return;
+            } else {
+            praisePick=Math.floor(Math.random()*praiseArray.length);
+            praise=praiseArray[praisePick];
+            document.querySelector("#feedback").innerHTML=praise;
+            document.querySelector("#feedback").style.color="blue";
+            document.querySelector("#ans").disabled= true;
+            setTimeout(enableInput, timeOut);
+            setTimeout(clearFeedback, timeOut);
+            setTimeout(clearAns, timeOut);
+            setTimeout(generateQuestion, timeOut);    
+                }
+        } else {
+            attemptsCount++;
+            console.log("Attempts " + attemptsCount);
+            tryAgainPick=Math.floor(Math.random()*tryAgainArray.length);
+            tryAgain=tryAgainArray[tryAgainPick];
+            document.querySelector("#feedback").innerHTML=tryAgain;
+            document.querySelector("#feedback").style.color="blue";
+            document.querySelector("#ans").disabled = true;
+            setTimeout(enableInput, timeOut);
+            setTimeout(clearFeedback, timeOut);
+            setTimeout(clearAns, timeOut);
+        };
+    
+    };
+
+
+const buttonPressed = () => {
+    if (correctCount>=12) {
+        location.reload();
     } else {
-        attemptsCount++;
-        console.log("Attempts " + attemptsCount);
-        tryAgainPick=Math.floor(Math.random()*tryAgainArray.length);
-        tryAgain=tryAgainArray[tryAgainPick];
-        document.querySelector("#feedback").innerHTML=tryAgain;
-        document.querySelector("#feedback").style.color="blue";
-        document.querySelector("#ans").disabled = true;
-        setTimeout(enableInput, timeOut);
-        setTimeout(clearFeedback, timeOut);
-        setTimeout(clearAns, timeOut);
+        submitAns();
     };
 };
 
