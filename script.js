@@ -8,6 +8,8 @@ let tryAgain
 let tryAgainPick
 let correctCount=0;
 let attemptsCount=0;
+let multiplier;
+let usedMultipliers=[];
 const praiseArray=['Well Done', 'Great Work', 'Amazing', 'Brilliant'];
 const tryAgainArray=['Try Again', 'Have Another Go'];
 const timeOut=1000;
@@ -19,10 +21,20 @@ document.querySelector("#ans").addEventListener("keydown", function (e) {
     }
 });
 
+//A function to generate a unique multiplier.
+const getUniqueMultiplier = () => {
+    do {
+        multiplier=Math.floor(Math.random()*12+1);
+    } while (usedMultipliers.includes(multiplier));
+        usedMultipliers.push(multiplier);
+        return multiplier;
+    };
+
+
 //A function to generate the number being multiplied and the question.
 const generateQuestion = () => {
-    randomNumber = Math.floor(Math.random()*12)+1
-    document.querySelector("#question").innerHTML='2 × ' + randomNumber + ' =  ';
+    getUniqueMultiplier();
+    document.querySelector("#question").innerHTML='2 × ' + multiplier + ' =  ';
     return randomNumber;
 };
 
@@ -30,7 +42,7 @@ const generateQuestion = () => {
 const submitAns = () => {
         ans=document.querySelector("#ans").value;
         ansNum = Number(ans);
-        if (ansNum===2*randomNumber) {
+        if (ansNum===2*multiplier) {
             correctCount++;
             attemptsCount++;
             console.log("Correct " + correctCount);
