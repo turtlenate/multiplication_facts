@@ -66,8 +66,16 @@ h1 {
     margin-bottom: 0px;
     }
 
+#pickFactButton {
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+
+
 #ans {
-    width: 50px;
+    width: 80px;
     height: 50px;
     margin-left: 15px;
     font-size: 40px;

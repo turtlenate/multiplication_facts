@@ -8,6 +8,7 @@ let tryAgain
 let tryAgainPick
 let correctCount=0;
 let attemptsCount=0;
+let fact=2;
 let multiplier;
 let usedMultipliers=[];
 const praiseArray=['Well Done', 'Great Work', 'Amazing', 'Brilliant'];
@@ -20,6 +21,13 @@ document.querySelector("#ans").addEventListener("keydown", function (e) {
         buttonPressed();
     }
 });
+
+document.querySelector("#pickFactButton").addEventListener("click", () => {
+    document.querySelector("#pickFact").showModal();
+}); 
+
+
+
 
 //A function to generate a unique multiplier.
 const getUniqueMultiplier = () => {
@@ -34,15 +42,27 @@ const getUniqueMultiplier = () => {
 //A function to generate the number being multiplied and the question.
 const generateQuestion = () => {
     getUniqueMultiplier();
-    document.querySelector("#question").innerHTML='2 × ' + multiplier + ' =  ';
+    document.querySelector("#question").innerHTML=fact +' × ' + multiplier + ' =  ';
     return randomNumber;
 };
+
+//Selecting a fact in the dialogue window. Closes the window, resets the counters and asks a new question.
+document.querySelectorAll(".fact-btn").forEach(button => {
+    button.addEventListener("click", (e) => {
+    fact=Number(e.target.dataset.fact);
+    console.log(fact);
+    document.querySelector("#pickFact").close();
+    correctCount=0;
+    attemptsCount=0;
+    generateQuestion();
+    });
+});
 
 
 const submitAns = () => {
         ans=document.querySelector("#ans").value;
         ansNum = Number(ans);
-        if (ansNum===2*multiplier) {
+        if (ansNum===fact*multiplier) {
             correctCount++;
             attemptsCount++;
             console.log("Correct " + correctCount);
