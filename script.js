@@ -66,8 +66,8 @@ const submitAns = () => {
             correctCount++;
             attemptsCount++;
             console.log("Correct " + correctCount);
-            if (correctCount>=12) {
-                                document.querySelector("#feedback").innerHTML="You have finished. You got " + correctCount + " out of " + attemptsCount + " correct.";
+            if (correctCount===12) {
+                                document.querySelector("#feedback").innerHTML="Done! " + correctCount + " out of " + attemptsCount + ".";
                                 document.querySelector("#feedback").style.color="blue";
                                 document.querySelector("#ans").value="";
                                 document.querySelector("#ans").disabled=true;
@@ -112,7 +112,7 @@ const buttonPressed = () => {
 //Function to clear feedback.
 const clearFeedback = () => {
     document.querySelector("#feedback").style.color="rgb(68, 184, 68)";
-    document.querySelector("#feedback").innerHTML="feedback";
+    document.querySelector("#feedback").innerHTML="";
 };
 
 //Function to clear the answer field.
